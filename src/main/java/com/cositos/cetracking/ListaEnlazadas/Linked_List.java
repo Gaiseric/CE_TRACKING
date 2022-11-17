@@ -1,12 +1,11 @@
-package com.cositos.LinkedList;
+package com.cositos.cetracking.ListaEnlazadas;
 
-public class LinkedList {
+public class Linked_List {
     private Node head;
     private Node last;
     private int size;
-    private int totalweighted;
 
-    public LinkedList(){
+    public Linked_List(){
         this.head= null;
         this.last= null;
         this.size= 0;
@@ -27,12 +26,6 @@ public class LinkedList {
     public int size(){
         return this.size;
     }
-
-    public void resetWithHead() {
-        this.last= this.head;
-        this.size= 1;
-        this.totalweighted= 0;
-    }
     
     /** 
      * @param data
@@ -48,7 +41,7 @@ public class LinkedList {
         }
     }
 
-    public void insertLast(Object data, int weigth){
+    public void insertLast(Object data){
         Node newNode= new Node(data);
 
         if (this.isEmpty()){
@@ -57,7 +50,6 @@ public class LinkedList {
             this.last.setNext(newNode);
             this.last= newNode;
         }
-        this.totalweighted= this.totalweighted + weigth;
         this.size++;
     }
 
@@ -83,7 +75,7 @@ public class LinkedList {
             lista= lista+ current.getData() + ", ";
             current= current.getNext();
         }
-        System.out.println(lista + "con un peso total de: " + this.totalweighted);
+        System.out.println(lista);
     }
 
     public Object GetHead() {
@@ -97,18 +89,11 @@ public class LinkedList {
 
         while(current!=null) {
             if (current.getData().equals(searchValue)) {
-                break;
+                return current.getNext().getData();
             } else {
                 current = current.getNext();
             }
         }
-
-        if (current.getNext() != null){
-            return current.getNext().getData();
-        } else {
-            return null;
-        } 
-        
-        
+        return null; 
     }
 }

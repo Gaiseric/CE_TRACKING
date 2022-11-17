@@ -1,13 +1,17 @@
 package com.cositos.cetracking.Grafos;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
 public class GraphWeighted<T> {
 	Map<T, LinkedList<Edge<T>>> adj = new HashMap<>() ;
 	boolean directed;
+	// No. of vertices in graph
+    private int v;
 	
 	//Constructor, Time O(1) Space O(1)
 	public GraphWeighted () {
@@ -25,6 +29,7 @@ public class GraphWeighted<T> {
 		adj.putIfAbsent(b, new LinkedList<>()); //add node
 		Edge<T> edge1 = new Edge<>(b, w);
 		adj.get(a).add(edge1); //add edge
+		this.v++;
 		if (!directed) { //undirected
 			Edge<T> edge2 = new Edge<>(a, w);
 			adj.get(b).add(edge2);
@@ -50,6 +55,7 @@ public class GraphWeighted<T> {
 			return;
 		Edge<T> edge1 = findEdgeByVetex(a, b);
 		ne1.remove(edge1);
+		this.v--;
 		if (!directed)  {//undirected
 			Edge<T> edge2 = findEdgeByVetex(b, a);
 			ne2.remove(edge2);
@@ -134,37 +140,56 @@ public class GraphWeighted<T> {
 	}
 
 
-	public void allPath(T src, T dest) {
-		HashMap<T, Boolean> visited= new HashMap<>();
-		com.cositos.LinkedList.LinkedList path = new com.cositos.LinkedList.LinkedList();
-		path.insertLast(src, 0);
-		allPathAux(src, dest, visited, path);
-
-	}
-
-	private void allPathAux(T current, T dest, HashMap<T, Boolean> visited, com.cositos.LinkedList.LinkedList path) {
-		if (current == dest) {
-			path.displayList();
-			System.out.println(" ");
-			path.resetWithHead();
-		} else {
-			visited.put(current, true);
-		}
-		for (Edge<T> edge : adj.get(current)) {
-			T u = edge.connectedVetex;
-			if (visited.get(u) == null) {
-				LinkedList<Edge<T>> lista =  adj.get(current);
-				for (Edge<T> searchedge: lista) {
-					if (searchedge.connectedVetex.equals(u)) {
-						
-						path.insertLast(u, searchedge.getWeight());
-					}
-				}
-				com.cositos.LinkedList.LinkedList newList= path;
-				allPathAux(u, dest, visited, newList);
-			}
-		}
-	}
+	// Prints all paths from
+    // 's' to 'd'
+    public void printAllPaths(T s, T d)
+    {
+        HashMap<T, Boolean> isVisited = new HashMap<>();
+        ArrayList<String> pathList = new ArrayList<>();
+		
+        // add source to path[]
+        pathList.add(""+s);
+        // Call recursive utility
+        printAllPathsUtil(s, d, isVisited, pathList, 0);
+    }
+ 
+    // A recursive function to print
+    // all paths from 'u' to 'd'.
+    // isVisited[] keeps track of
+    // vertices in current path.
+    // localPathList<> stores actual
+    // vertices in the current path
+    private void printAllPathsUtil(T u, T d, HashMap<T, Boolean> isVisited, List<String> localPathList, int pathCost){
+ 
+        if (u.equals(d)) {
+            System.out.println(localPathList+ " con un costo de: " + pathCost + "\n");
+            // if match found then no need to traverse more till depth
+            return;
+        }
+ 
+        // Mark the current node
+        isVisited.put(u, true);
+ 
+        // Recur for all the vertices
+        // adjacent to current vertex
+        for (Edge<T> i : adj.get(u)) {
+			T cv = i.connectedVetex;
+            if (isVisited.get(cv) == null) {
+                // store current node
+                // in path[]
+                localPathList.add(""+cv);
+				pathCost= pathCost + i.getWeight();
+                printAllPathsUtil(cv, d, isVisited, localPathList, pathCost);
+                // remove current node
+                // in path[]
+				pathCost= pathCost - i.getWeight();
+                localPathList.remove(cv);
+            }
+        }
+ 
+        // Mark the current node
+        isVisited.remove(u, true);
+    }
 
 	//Check there is path from src and dest
 	//DFS, Time O(V+E), Space O(V)

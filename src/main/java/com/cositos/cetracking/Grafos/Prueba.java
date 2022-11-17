@@ -12,11 +12,12 @@ public class Prueba {
     grafo.addEdge("US", "Rusia", 8000);
     grafo.addEdge("Colombia", "Mexico", 250);
     grafo.addEdge("Cartago", "Heredia", 500);
+    grafo.addEdge("Heredia", "US", 50);
     grafo.addEdge("San Jose", "Rusia", 980);
     grafo.addEdge("Heredia", "Rusia", 745);
     grafo.addEdge("Puntarenas", "Rusia", 520);
     grafo.addEdge("Cartago", "Rusia", 69);
-   //grafo.allPath("Cartago", "Rusia");
-    grafo.print();
+    grafo.printAllPaths("Cartago", "Rusia");
+    //grafo.print();
     }
 }

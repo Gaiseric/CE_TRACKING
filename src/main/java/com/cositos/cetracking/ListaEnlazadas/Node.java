@@ -1,4 +1,4 @@
-package com.cositos.LinkedList;
+package com.cositos.cetracking.ListaEnlazadas;
 
 
 public class Node {
