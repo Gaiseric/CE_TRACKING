@@ -15,5 +15,9 @@ class Edge<T> {
 	public String toString() {
 		return "(" + connectedVetex + "," + weight + ")";
 	}
+
+	public int getWeight() {
+		return this.weight;
+	}
 }
 
