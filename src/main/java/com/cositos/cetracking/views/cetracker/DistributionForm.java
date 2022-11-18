@@ -5,7 +5,7 @@ import com.vaadin.flow.component.notification.Notification;
 
 import java.util.ArrayList;
 
-import com.cositos.cetracking.Application;
+
 import com.cositos.cetracking.datos.info.Distributions;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEvent;
@@ -15,7 +15,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.ValidationException;
@@ -25,8 +25,8 @@ public class DistributionForm extends FormLayout {
     private Distributions distributions;
     static ArrayList<String> DistributionsList= new ArrayList<>();
     static ComboBox<String> distribution = new ComboBox<>("Distributions");
-    static ComboBox<String> connectedto = new ComboBox<>("Connectedto");
-    TextField cost = new TextField("Cost");
+    static ComboBox<String> connectedto = new ComboBox<>("Connected To");
+    IntegerField cost = new IntegerField("Cost");
     Binder<Distributions> binder = new BeanValidationBinder<>(Distributions.class); 
     
     

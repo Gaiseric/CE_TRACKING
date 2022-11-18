@@ -15,7 +15,7 @@ public class DistributionService {
         this.distributionsRepository = distributionsrepository;
     }
 
-    public List<Distributions> findAllPackages(String filterText) {
+    public List<Distributions> findAllDistributions(String filterText) {
         if  (filterText == null || filterText.isEmpty()) {
             return distributionsRepository.findAll();
         } else {
@@ -23,17 +23,17 @@ public class DistributionService {
         }
     }
 
-    public long countPackage() {
+    public long countDistribution() {
         return distributionsRepository.count();
     }
 
-    public void deletePackage(Distributions distributions) {
+    public void deleteDistribution(Distributions distributions) {
         distributionsRepository.delete(distributions);
     }
 
-    public void savePackage(Distributions distributions) {
+    public void saveDistribution(Distributions distributions) {
         if (distributions == null) {
-            System.out.println("Package is null");
+            System.out.println("Distribution is null");
             return;
         }
         

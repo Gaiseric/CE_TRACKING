@@ -2,6 +2,7 @@ package com.cositos.cetracking.datos.info;
 
 import javax.persistence.Entity;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import com.cositos.cetracking.datos.service.AbstractEntity;
 
@@ -14,8 +15,8 @@ public class Distributions extends AbstractEntity{
     @NotEmpty
     private String connectedto = "";
 
-    @NotEmpty
-    private String cost = "";
+    @NotNull
+    private int cost = 0;
 
 
     public String getdistribution() {
@@ -34,11 +35,11 @@ public class Distributions extends AbstractEntity{
         this.connectedto = connectedto;
     }
 
-    public String getcost() {
+    public int getcost() {
         return this.cost;
     }
 
-    public void setcost(String cost) {
+    public void setcost(int cost) {
         this.cost = cost;
     }
 

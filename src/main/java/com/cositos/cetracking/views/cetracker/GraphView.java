@@ -48,7 +48,7 @@ public class GraphView extends VerticalLayout{
     }
 
     private void updateList() {
-        DistributionsGrid.setItems(service.findAllPackages(filterText.getValue()));
+        DistributionsGrid.setItems(service.findAllDistributions(filterText.getValue()));
     }
 
     private Component getContent() {
@@ -71,13 +71,13 @@ public class GraphView extends VerticalLayout{
     }
 
     private void saveDistribution(DistributionForm.SaveEvent event) {
-        service.savePackage(event.getDistribution());
+        service.saveDistribution(event.getDistribution());
         updateList();
         closeEditor();
     }
 
     private void deleteDistribution(DistributionForm.DeleteEvent event) {
-        service.deletePackage(event.getDistribution());
+        service.deleteDistribution(event.getDistribution());
         updateList();
         closeEditor();
     }
