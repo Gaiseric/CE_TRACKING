@@ -6,3 +6,8 @@
         display: none;
     }
 }
+
+a[highLight] {
+    font-weight: bold;
+    text-decoration: underline;
+}

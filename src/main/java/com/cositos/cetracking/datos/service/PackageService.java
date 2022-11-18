@@ -8,11 +8,11 @@ import com.cositos.cetracking.datos.info.Packages;
 import com.cositos.cetracking.datos.repository.PackagesRepository;
 
 @Service
-public class CrmService {
+public class PackageService {
     
     private final PackagesRepository packagesRepository;
 
-    public CrmService(PackagesRepository packagesrepository) {
+    public PackageService(PackagesRepository packagesrepository) {
 
         this.packagesRepository = packagesrepository;
     }

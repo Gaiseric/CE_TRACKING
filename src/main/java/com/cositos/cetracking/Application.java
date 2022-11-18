@@ -1,9 +1,14 @@
 package com.cositos.cetracking;
 
+import com.cositos.cetracking.datos.graph.graphgenerator;
+import com.cositos.cetracking.views.cetracker.DistributionForm;
 import com.vaadin.flow.component.dependency.NpmPackage;
 import com.vaadin.flow.component.page.AppShellConfigurator;
 import com.vaadin.flow.server.PWA;
 import com.vaadin.flow.theme.Theme;
+
+import java.util.ArrayList;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -19,9 +24,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @PWA(name = "CETracking", shortName = "CETracking", offlineResources = {})
 @NpmPackage(value = "line-awesome", version = "1.3.0")
 public class Application implements AppShellConfigurator {
+    static graphgenerator Generador= new graphgenerator();
 
     public static void main(String[] args) {
+        Generador.Inicio();
         SpringApplication.run(Application.class, args);
+        DistributionForm.setList(Generador.getList());
     }
+
+   
 
 }

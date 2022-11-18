@@ -1,7 +1,8 @@
 package com.cositos.cetracking.views.cetracker;
 
 import com.cositos.cetracking.datos.info.Packages;
-import com.cositos.cetracking.datos.service.CrmService;
+import com.cositos.cetracking.datos.service.PackageService;
+import com.cositos.cetracking.views.MainLayout;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
@@ -15,15 +16,15 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 @PageTitle("CETracker")
-@Route(value = "")
+@Route(value = "", layout = MainLayout.class)
 public class CETrackerView extends VerticalLayout {
     private TextField name;
     Grid<Packages> PackagesGrid= new Grid<>(Packages.class);
     TextField filterText= new TextField();
     PackageForm form;
-    CrmService service;
+    PackageService service;
 
-    public CETrackerView(CrmService service) {
+    public CETrackerView(PackageService service) {
         this.service = service;
         add(new H1("We are cositos"));
 
