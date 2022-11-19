@@ -2,6 +2,7 @@ package com.cositos.cetracking;
 
 import com.cositos.cetracking.datos.graph.graphgenerator;
 import com.cositos.cetracking.views.cetracker.DistributionForm;
+import com.cositos.cetracking.views.cetracker.PackageForm;
 import com.vaadin.flow.component.dependency.NpmPackage;
 import com.vaadin.flow.component.page.AppShellConfigurator;
 import com.vaadin.flow.server.PWA;
@@ -26,9 +27,10 @@ public class Application implements AppShellConfigurator {
     static graphgenerator Generador= new graphgenerator();
 
     public static void main(String[] args) {
-        Generador.Inicio();
         SpringApplication.run(Application.class, args);
-        DistributionForm.setList(Generador.getList());
+        graphgenerator.Inicio();
+        DistributionForm.setList(graphgenerator.getList());
+        PackageForm.setList(graphgenerator.getList());
     }
 
    

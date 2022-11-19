@@ -1,16 +1,22 @@
 package com.cositos.cetracking.views.cetracker;
 
+import java.util.ArrayList;
+
 import com.cositos.cetracking.datos.info.Packages;
 import com.cositos.cetracking.datos.service.PackageService;
 import com.cositos.cetracking.views.MainLayout;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.listbox.ListBox;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.binder.BeanValidationBinder;
+import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -20,6 +26,8 @@ import com.vaadin.flow.router.Route;
 public class CETrackerView extends VerticalLayout {
     private TextField name;
     Grid<Packages> PackagesGrid= new Grid<>(Packages.class);
+    static ListBox<Object> Rutes = new ListBox<>();
+    static Packages packages;
     TextField filterText= new TextField();
     PackageForm form;
     PackageService service;
@@ -29,6 +37,7 @@ public class CETrackerView extends VerticalLayout {
         add(new H1("We are cositos"));
 
         Button Enviarbtn = new Button("Send");
+        Button Sendpack= new Button("Send Packages");
 
         name = new TextField("Insert your name");
 
@@ -36,6 +45,7 @@ public class CETrackerView extends VerticalLayout {
         hl.setDefaultVerticalComponentAlignment(Alignment.BASELINE);
 
         Enviarbtn.addClickListener(click-> Actuar());
+        Sendpack.addClickListener(click -> sendpack());
         
 
         addClassName("CETracker");
@@ -43,11 +53,14 @@ public class CETrackerView extends VerticalLayout {
 
         configureGrid();
         configureForm();
-
+        Rutes.setWidthFull();
+        Rutes.setHeightFull();
         add(
             hl,
             getToolbar(),
-            getContent()
+            getContent(),
+            Rutes,
+            Sendpack
         );
 
         updateList();
@@ -123,7 +136,21 @@ public class CETrackerView extends VerticalLayout {
 
         PackagesGrid.asSingleSelect().addValueChangeListener(e -> editPackage(e.getValue()));
     }
+
+    public static void configureRute(ArrayList<Object> posiblerutes, Packages pack) {
+        packages= pack;
+        Rutes.clear();
+        Rutes.setItems(posiblerutes);
+    }
     
+    @SuppressWarnings("unchecked")
+    public void sendpack() {
+        ArrayList<Object> r= (ArrayList<Object>) Rutes.getValue();
+        packages.sethexcode("Aqui va un codigo random");
+        packages.setstatus("En envio pero esto aun no cambia");
+        System.out.println(r.get(1));
+        form.sendpackages(packages);
+    }
 
     private void editPackage(Packages packages) {
         if (packages == null){

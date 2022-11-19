@@ -5,7 +5,6 @@ import com.vaadin.flow.component.notification.Notification;
 
 import java.util.ArrayList;
 
-
 import com.cositos.cetracking.datos.info.Distributions;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEvent;

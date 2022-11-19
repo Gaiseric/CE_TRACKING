@@ -6,19 +6,21 @@ import com.cositos.cetracking.Grafos.GraphWeighted;
 import com.cositos.cetracking.datos.info.Distributions;
 
 public class graphgenerator {
-    ArrayList<String> List= new ArrayList<>();
-    ArrayList<Distributions> Distributions = new ArrayList<>();
-    public void Inicio() {
+    static ArrayList<String> List= new ArrayList<>();
+    static ArrayList<Distributions> Distributions = new ArrayList<>();
+    static GraphWeighted<String> grafo = new GraphWeighted<>();
+    public static void Inicio() {
         String[] provincias = new String[]{"San Jose", "Alajuela", "Heredia", "Cartago", "Puntarenas", "Guanacaste", "Limon"};
-        GraphWeighted<String> grafo = new GraphWeighted<>();
         int cantidad= (int) (Math.random() * 7) + 3;
+        List.clear();
         if (cantidad>7){
             while(cantidad!=7){
                 cantidad--;
             }
         }
+        cantidad=4;
+        grafo = new GraphWeighted<>();
         for (int j = 0; j < cantidad; j++) {
-            System.out.println(cantidad);
             Distributions dis = new Distributions();
             if(j+1 == cantidad){
                 String Connected= provincias[0];
@@ -40,11 +42,16 @@ public class graphgenerator {
         }
     }
 
-    public ArrayList<String> getList() {
+    public static ArrayList<String> getList() {
         return List;
     }
     
     public ArrayList<Distributions> getDistributions() {
         return Distributions;
+    }
+
+    public static ArrayList<Object> getrutes(String src, String dst){
+        grafo.printAllPaths(src, dst);
+        return grafo.getrutes();
     }
 }

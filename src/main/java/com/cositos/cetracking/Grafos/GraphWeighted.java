@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Queue;
 
 public class GraphWeighted<T> {
+	ArrayList<Object> rutes = new ArrayList<>();
 	Map<T, LinkedList<Edge<T>>> adj = new HashMap<>() ;
 	boolean directed;
 	// No. of vertices in graph
@@ -150,6 +151,7 @@ public class GraphWeighted<T> {
         // add source to path[]
         pathList.add(""+s);
         // Call recursive utility
+		rutes.clear();
         printAllPathsUtil(s, d, isVisited, pathList, 0);
     }
  
@@ -162,6 +164,10 @@ public class GraphWeighted<T> {
     private void printAllPathsUtil(T u, T d, HashMap<T, Boolean> isVisited, List<String> localPathList, int pathCost){
  
         if (u.equals(d)) {
+			ArrayList<Object> newrute= new ArrayList<>();
+			newrute.add(localPathList + "con un costo de: ");
+			newrute.add(pathCost);
+			rutes.add(newrute);
             System.out.println(localPathList+ " con un costo de: " + pathCost + "\n");
             // if match found then no need to traverse more till depth
             return;
@@ -190,6 +196,10 @@ public class GraphWeighted<T> {
         // Mark the current node
         isVisited.remove(u, true);
     }
+
+	public ArrayList<Object> getrutes() {
+		return rutes;
+	}
 
 	//Check there is path from src and dest
 	//DFS, Time O(V+E), Space O(V)
