@@ -53,6 +53,24 @@ public class Linked_List {
         this.size++;
     }
 
+    /** 
+     * @param data
+     * @return boolean
+     * Checking if the data is already in the list.
+     */
+    public boolean InsertLastUnique(Object data) {
+        Node current= this.head;
+        while(current!=null){
+            if(current.getData().equals(data)){
+                return false;
+            } else {
+                current = current.getNext();
+            }
+        }
+        insertLast(data);
+        return true;
+    }
+
     
     /** 
      * @return Node

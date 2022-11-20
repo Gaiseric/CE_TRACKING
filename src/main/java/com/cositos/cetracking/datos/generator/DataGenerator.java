@@ -25,7 +25,7 @@ public class DataGenerator {
                 logger.info("Using existing database");
                 return;
             }
-            generato.Inicio();
+            graphgenerator.Inicio();
             
             contacts= generato.getDistributions();
             

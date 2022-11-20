@@ -14,24 +14,23 @@ public class graphgenerator {
         int cantidad= (int) (Math.random() * 7) + 3;
         List.clear();
         if (cantidad>7){
-            while(cantidad!=7){
+            while(cantidad!=6){
                 cantidad--;
             }
         }
-        cantidad=4;
         grafo = new GraphWeighted<>();
         for (int j = 0; j < cantidad; j++) {
             Distributions dis = new Distributions();
             if(j+1 == cantidad){
                 String Connected= provincias[0];
-                int cost= (int) (Math.random() * 500) + 20;
+                int cost= (int) (Math.random() * 11) + 1;
                 dis.setdistribution(provincias[j]);
                 dis.setconnectedto(Connected);
                 dis.setcost(cost);
                 grafo.addEdge(provincias[j], Connected, cost);
             } else{
                 String Connected= provincias[j+1];
-                int cost= (int) (Math.random() * 500) + 20;
+                int cost= (int) (Math.random() * 11) + 1;
                 dis.setdistribution(provincias[j]);
                 dis.setconnectedto(Connected);
                 dis.setcost(cost);
