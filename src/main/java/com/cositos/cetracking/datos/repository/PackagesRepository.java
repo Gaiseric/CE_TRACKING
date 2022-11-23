@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.cositos.cetracking.datos.info.Packages;
 
+// A repository that extends JpaRepository.
 public interface PackagesRepository extends JpaRepository<Packages, Integer> {
     
     @Query("select c from Packages c " +

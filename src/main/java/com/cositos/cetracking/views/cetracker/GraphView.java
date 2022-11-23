@@ -98,7 +98,7 @@ public class GraphView extends VerticalLayout{
 
     private void addDistribution() {
         DistributionsGrid.asSingleSelect().clear();
-        editDistribution(new Distributions());
+        createDistribution(new Distributions());
     }
 
     private void configureGrid() {
@@ -110,8 +110,19 @@ public class GraphView extends VerticalLayout{
         DistributionsGrid.asSingleSelect().addValueChangeListener(e -> editDistribution(e.getValue()));
     }
     
+    private void createDistribution(Distributions distributions){
+        form.changeBooleanToFalse();
+        if (distributions == null){
+            closeEditor();
+        } else {
+            form.setPackage(distributions);
+            form.setVisible(true);
+            addClassName("editing");
+        }
+    }
 
     private void editDistribution(Distributions distributions) {
+        form.changeBooleanToTrue();
         if (distributions == null){
             closeEditor();
         } else {

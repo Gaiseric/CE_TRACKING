@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import com.cositos.cetracking.datos.info.Distributions;
 
 
+// A repository that extends JpaRepository.
 public interface DistributionsRepository extends JpaRepository<Distributions, Integer>{
     
     @Query("select c from Distributions c " +

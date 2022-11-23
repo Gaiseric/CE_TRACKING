@@ -22,6 +22,10 @@ import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
+/**
+ * This class is the main view of the application, it contains the grid of packages, the form to add
+ * and edit packages, the toolbar to filter packages and the button to send packages
+ */
 @PageTitle("CETracker")
 @Route(value = "", layout = MainLayout.class)
 public class CETrackerView extends VerticalLayout {
@@ -37,6 +41,7 @@ public class CETrackerView extends VerticalLayout {
     PackageForm form;
     PackageService service;
 
+    // Creating a new view for the application.
     public CETrackerView(PackageService service, SendThread send) {
         this.service = service;
         this.send= send;
@@ -76,6 +81,9 @@ public class CETrackerView extends VerticalLayout {
         closeEditor();
     }
 
+    /**
+     * It sets the package to null, sets the form to invisible, and removes the class name "editing"
+     */
     private void closeEditor() {
         form.setPackage(null);
         form.setVisible(false);
@@ -83,10 +91,32 @@ public class CETrackerView extends VerticalLayout {
 
     }
 
+    /**
+     * The function updates the list of packages in the grid by calling the findAllPackages function in
+     * the service class and passing it the value of the filterText field.
+     */
     private void updateList() {
         PackagesGrid.setItems(service.findAllPackages(filterText.getValue()));
     }
 
+    /**
+     * "This function returns a HorizontalLayout object that contains a Grid and a Form object, and
+     * sets the size of the Grid to be twice as large as the Form."
+     * 
+     * The first line of the function creates a HorizontalLayout object called "content" and adds the
+     * Grid and Form objects to it.
+     * 
+     * The second line of the function sets the Grid to be twice as large as the Form.
+     * 
+     * The fourth line of the function adds a CSS class called "content" to the HorizontalLayout object.
+     * 
+     * 
+     * The fifth line of the function sets the size of the HorizontalLayout object to be full.
+     * 
+     * The last line of the function returns the HorizontalLayout object.
+     * 
+     * @return A Component
+     */
     private Component getContent() {
         HorizontalLayout content = new HorizontalLayout(PackagesGrid, form);
         content.setFlexGrow(2, PackagesGrid);
@@ -97,6 +127,10 @@ public class CETrackerView extends VerticalLayout {
         return content;
     }
 
+    /**
+     * The configureForm() function creates a new PackageForm object, sets its width, and adds
+     * listeners for the SaveEvent, ConfigureEvent, DeleteEvent, and CloseEvent.
+     */
     private void configureForm() {
         form = new PackageForm();
         form.setWidth("25em");
@@ -107,17 +141,33 @@ public class CETrackerView extends VerticalLayout {
         form.addListener(PackageForm.CloseEvent.class, e-> closeEditor());
     }
 
+    /**
+     * It saves the package.
+     * 
+     * @param event The event that was fired.
+     */
     private void savePackage(PackageForm.SaveEvent event) {
         service.savesdsdPackage(event.getPackage());
         updateList();
     }
 
+    /**
+     * It deletes a package and the hexcodes
+     * 
+     * @param event The event that was fired.
+     */
     private void deletePackage(PackageForm.DeleteEvent event) {
+        Hexcodes.eliminateall(event.getPackage().gethexcode());
         service.deletePackage(event.getPackage());
         updateList();
         closeEditor();
     }
 
+    /**
+     * It takes a list of objects and a package, and then it calls another function
+     * 
+     * @param event PackageForm.ConfigureEvent
+     */
     private void configureEvent(PackageForm.ConfigureEvent event) {
         packages= event.getPackage();
         ArrayList<Object> rutes= new ArrayList<>();
@@ -134,6 +184,11 @@ public class CETrackerView extends VerticalLayout {
 
     }
 
+    /**
+     * It creates a toolbar with a text field and a button.
+     * 
+     * @return A Component object.
+     */
     private Component getToolbar() {
         filterText.setPlaceholder("Filter by Codigo");
         filterText.setClearButtonVisible(true);
@@ -148,11 +203,19 @@ public class CETrackerView extends VerticalLayout {
         return toolbar;
     }
 
+    /**
+     * If the user clicks the add button, the grid will clear any selected items and then open the edit
+     * form.
+     */
     private void addPackage() {
         PackagesGrid.asSingleSelect().clear();
         editPackage(new Packages());
     }
 
+    /**
+     * It adds a class name to the grid, sets the size to full, sets the columns, and sets the columns
+     * to auto width
+     */
     private void configureGrid() {
         PackagesGrid.addClassName("datos-grid");
         PackagesGrid.setSizeFull();
@@ -162,6 +225,13 @@ public class CETrackerView extends VerticalLayout {
         PackagesGrid.asSingleSelect().addValueChangeListener(e -> editPackage(e.getValue()));
     }
 
+    /**
+     * It takes an ArrayList of Objects and a Packages object, and then sets the items of a ComboBox to
+     * the ArrayList, and sets the ComboBox to visible
+     * 
+     * @param posiblerutes ArrayList of objects that are the possible routes for the package.
+     * @param pack is the package that is being edited
+     */
     private  void configureRute(ArrayList<Object> posiblerutes, Packages pack) {
         packages= pack;
         Rutes.clear();
@@ -170,6 +240,10 @@ public class CETrackerView extends VerticalLayout {
         closeEditor();
     }
     
+    /**
+     * It generates a random hexadecimal code, checks if it's unique, and if it is, it sends the
+     * package
+     */
     @SuppressWarnings("unchecked")
     private void sendpack() {
         ArrayList<Object> r= (ArrayList<Object>) Rutes.getValue();
@@ -223,6 +297,14 @@ public class CETrackerView extends VerticalLayout {
         }
     }
 
+    /**
+     * It's a recursive function that updates the status of a package every second until the time of
+     * waiting is over
+     * 
+     * @param pack the package that is being sent
+     * @param forms the form that the user is using to send the package
+     * @param timeofwating the time it takes for the package to be delivered
+     */
     private void packagestate(Packages pack, PackageForm forms ,int timeofwating){
         int remaning= timeofwating;
         var ui= UI.getCurrent();
@@ -245,6 +327,9 @@ public class CETrackerView extends VerticalLayout {
         });
     }
 
+    /**
+     * It updates the list, sends a request to the server, and then updates the list again
+     */
     private void updateing(){
         var ui= UI.getCurrent();
         updateList();
@@ -262,6 +347,12 @@ public class CETrackerView extends VerticalLayout {
         });
     }
 
+    /**
+     * If the package is null, close the editor. Otherwise, set the package to the form and make the
+     * form visible
+     * 
+     * @param packages The package that is being edited.
+     */
     private void editPackage(Packages packages) {
         if (packages == null){
             closeEditor();
@@ -272,6 +363,10 @@ public class CETrackerView extends VerticalLayout {
         }
     }
 
+    /**
+     * The function Actuar() is called when the button is clicked. It shows a notification and prints a
+     * message to the console
+     */
     public void Actuar() {
 
         Notification.show("Hello, " + this.name.getValue());

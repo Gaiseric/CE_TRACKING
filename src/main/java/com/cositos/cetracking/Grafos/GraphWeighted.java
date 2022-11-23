@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
+/**
+ * The class GraphWeighted is a generic class that represents a weighted graph
+ */
 public class GraphWeighted<T> {
 	ArrayList<Object> rutes = new ArrayList<>();
 	Map<T, LinkedList<Edge<T>>> adj = new HashMap<>() ;
@@ -14,17 +17,25 @@ public class GraphWeighted<T> {
 	// No. of vertices in graph
     private int v;
 	
-	//Constructor, Time O(1) Space O(1)
+	
+	// A constructor.
 	public GraphWeighted () {
 		directed = false; //default, Undirected graph
 	}
 	
-	//Constructor, Time O(1) Space O(1)
+	// A constructor that takes a boolean as a parameter.
 	public GraphWeighted(boolean d) {
 		directed = d;
 	}
 
-    //Add edges including adding nodes, Time O(1) Space O(1)
+	/**
+	 * If the graph doesn't contain the nodes a and b, add them. Then add an edge from a to b with weight
+	 * w. If the graph is undirected, add an edge from b to a with weight w
+	 * 
+	 * @param a the first node
+	 * @param b the node to connect to
+	 * @param w weight of the edge
+	 */
 	public void addEdge(T a, T b, int w) {
 		adj.putIfAbsent(a, new LinkedList<>()); //add node
 		adj.putIfAbsent(b, new LinkedList<>()); //add node
@@ -36,10 +47,19 @@ public class GraphWeighted<T> {
 			adj.get(b).add(edge2);
 		}			
 	}
-
-    //Find the edge between two nodes, Time O(n) Space O(1), n is number of neighbors 
+ 
+	/**
+	 * > Find the edge that connects two vertices
+	 * 
+	 * @param a the first vertex
+	 * @param b the vertex to be connected to a
+	 * @return The edge between two vertices.
+	 */
 	private Edge<T> findEdgeByVetex(T a, T b) {
 		LinkedList<Edge<T>> ne = adj.get(a);
+		if(ne==null){
+			return null;
+		}
 		for (Edge<T> edge: ne) {
 			if (edge.connectedVetex.equals(b)) {
 				return edge;
@@ -48,7 +68,12 @@ public class GraphWeighted<T> {
 		return null;
 	}
 	
-	//Remove direct connection between a and b, Time O(n) Space O(1)
+	/**
+	 * It removes an edge from the graph.
+	 * 
+	 * @param a the first vertex
+	 * @param b the vertex that is the destination of the edge
+	 */
 	public void removeEdge(T a, T b) {
 		LinkedList<Edge<T>> ne1 = adj.get(a);
 		LinkedList<Edge<T>> ne2 = adj.get(b); 
@@ -63,7 +88,12 @@ public class GraphWeighted<T> {
 		}
 	}
 	
-	//Remove a node including all its edges, Time O(V) Space O(1), V is number of vertics in graph
+	/**
+	 * If the graph is undirected, remove all edges that connect to the node to be removed. If the graph
+	 * is directed, remove all edges that point to the node to be removed
+	 * 
+	 * @param v the vertex to be removed
+	 */
 	public void removeNode(T v) {		
 		if (!directed) { //undirected
 			LinkedList<Edge<T>> ne1 = adj.get(v);
@@ -81,12 +111,23 @@ public class GraphWeighted<T> {
 		adj.remove(v);
 	}
 
-    //Check whether there is node by its key, Time O(1) Space O(1)
+	/**
+	 * This function returns true if the graph contains a node with the given key, and false otherwise
+	 * 
+	 * @param key The key of the node to check for.
+	 * @return A boolean value.
+	 */
 	public boolean hasNode(T key) {
 		return adj.containsKey(key);
 	}
 	
-	//Check whether there is direct connection between two nodes, Time O(n), Space O(1)
+	/**
+	 * If the graph is directed, then return true if there is an edge from a to b. If the graph is
+	 * undirected, then return true if there is an edge from a to b or from b to a
+	 * 
+	 * @param a the first vertex
+	 * @param b the vertex that the edge is connected to
+	 */
 	public boolean hasEdge(T a, T b) {
 		Edge<T> edge1 = findEdgeByVetex(a, b);
 		if (directed) {//directed
@@ -98,38 +139,33 @@ public class GraphWeighted<T> {
 		}
 	}
 
-    //Print graph as hashmap, Time O(V+E), Space O(1)
+	/**
+	 * For each key in the adjacency list, print the key and the value associated with that key
+	 */
 	public void print() {
 		for (T key: adj.keySet()) {
-			//System.out.println(adj);
-			LinkedList<Edge<T>> lista =  adj.get(key);
-			int cantdatos= lista.size();
-			if (cantdatos>=1) {
-				Edge<T> actual;
-				int dato= 0;
-				System.out.println("Jeje:"+key+"\n");
-				while(cantdatos>0) {
-					actual= lista.get(dato);
-					System.out.println(actual.connectedVetex);
-					//System.out.println(actual.getWeight());
-					dato++;
-					cantdatos--;
-				}
-				System.out.println("\n");
-			}
-			//System.out.println(key + "," + adj.get(key));
+			System.out.println(key + "," + adj.get(key));
 		}
 	}
-	
 
-	//Traversal starting from src, DFS, Time O(V+E), Space O(V)
+	/**
+	 * We start at the source node, mark it as visited, and then recursively call the helper function on
+	 * all of its unvisited neighbors
+	 * 
+	 * @param src The source node from which we want to start the traversal.
+	 */
 	public void dfsTraversal(T src) {
 		HashMap<T, Boolean> visited = new HashMap<>();
 	    helper(src, visited);
 	    System.out.println();
 	}
-	
-	//DFS helper, Time O(V+E), Space O(V) 
+	 
+	/**
+	 * A helper function for the DFS function. It is a recursive function that traverses the graph.
+	 * 
+	 * @param v the vertex we are currently visiting
+	 * @param visited a hashmap that keeps track of the visited vertices
+	 */
 	private void helper(T v, HashMap<T, Boolean> visited) {
 	    visited.put(v, true);
 	    System.out.print(v.toString() + " ");
@@ -140,11 +176,13 @@ public class GraphWeighted<T> {
 	    }
 	}
 
-
-	// Prints all paths from
-    // 's' to 'd'
-    public void printAllPaths(T s, T d)
-    {
+    /**
+	 * It prints all the paths from source to destination.
+	 * 
+	 * @param s source node
+	 * @param d destination
+	 */
+	public void printAllPaths(T s, T d) {
         HashMap<T, Boolean> isVisited = new HashMap<>();
         ArrayList<String> pathList = new ArrayList<>();
 		
@@ -155,13 +193,34 @@ public class GraphWeighted<T> {
         printAllPathsUtil(s, d, isVisited, pathList, 0);
     }
  
-    // A recursive function to print
-    // all paths from 'u' to 'd'.
-    // isVisited[] keeps track of
-    // vertices in current path.
-    // localPathList<> stores actual
-    // vertices in the current path
-    private void printAllPathsUtil(T u, T d, HashMap<T, Boolean> isVisited, List<String> localPathList, int pathCost){
+    /**
+	 * We start from the source vertex and explore all paths from the source to the destination vertex.
+	 * 
+	 * 
+	 * The function printAllPathsUtil() does the actual work. It takes the current vertex u, the
+	 * destination vertex d, a boolean array isVisited[] to keep track of vertices in current path, a
+	 * list localPathList to store the current path, and an integer pathCost to store the cost of the
+	 * current path. 
+	 * 
+	 * If the current vertex is equal to the destination vertex, then we print the current path and
+	 * return. 
+	 * 
+	 * Otherwise, we mark the current vertex as visited and recur for all the vertices adjacent to the
+	 * current vertex. 
+	 * 
+	 * When we are done exploring all paths from the current vertex, we mark the current vertex as
+	 * unvisited to make it usable in other paths. 
+	 * 
+	 * The function printAllPaths() simply initializes the data structures and calls
+	 * printAllPathsUtil().
+	 * 
+	 * @param u The current node
+	 * @param d destination vertex
+	 * @param isVisited A HashMap that keeps track of the vertices that have been visited.
+	 * @param localPathList This is the list of vertices that are in the current path.
+	 * @param pathCost The cost of the path from the source to the current vertex.
+	 */
+	private void printAllPathsUtil(T u, T d, HashMap<T, Boolean> isVisited, List<String> localPathList, int pathCost){
  
         if (u.equals(d)) {
 			ArrayList<Object> newrute= new ArrayList<>();
@@ -197,18 +256,36 @@ public class GraphWeighted<T> {
         isVisited.remove(u, true);
     }
 
+	/**
+	 * This function returns an ArrayList of Objects
+	 * 
+	 * @return An ArrayList of Objects.
+	 */
 	public ArrayList<Object> getrutes() {
 		return rutes;
 	}
 
-	//Check there is path from src and dest
-	//DFS, Time O(V+E), Space O(V)
+	/**
+	 * It checks if there is a path from src to dest.
+	 * 
+	 * @param src The source node
+	 * @param dest The destination node
+	 * @return A boolean value.
+	 */
 	public boolean hasPathDFS(T src, T dest) {
 		HashMap<T, Boolean> visited = new HashMap<>();
 	    return dfsHelper(src, dest, visited);
 	}
 	
-	//DFS helper, Time O(V+E), Space O(V) 
+	/**
+	 * If the current vertex is the destination, return true. Otherwise, mark the current vertex as
+	 * visited and recursively call the function on all of its neighbors
+	 * 
+	 * @param v the current vertex
+	 * @param dest the destination vertex
+	 * @param visited a hashmap that keeps track of the visited vertices
+	 * @return The return value is a boolean value.
+	 */
 	private boolean dfsHelper(T v, T dest, HashMap<T, Boolean> visited) {
 		if (v == dest)
 			return true;
@@ -221,8 +298,15 @@ public class GraphWeighted<T> {
 	    return false;
 	}
 
-	//Check there is path from src and dest
-	//BFS, Time O(V+E), Space O(V), V is number of vertices, E is number of edges
+	/**
+	 * We start from the source vertex and visit all the vertices connected to it. We keep on visiting the
+	 * vertices connected to the vertices which are already visited. We keep on doing this until we reach
+	 * the destination vertex or we have visited all the vertices
+	 * 
+	 * @param src The source vertex
+	 * @param dest The destination node
+	 * @return The method returns true if there is a path from src to dest, and false otherwise.
+	 */
 	public boolean hasPathBFS(T src, T dest) {
 		if (!hasNode(src) || !hasNode(dest))
 			return false;

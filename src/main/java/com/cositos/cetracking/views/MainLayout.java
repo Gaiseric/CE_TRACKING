@@ -11,14 +11,21 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.HighlightConditions;
 import com.vaadin.flow.router.RouterLink;
 
+/**
+ * It creates a header and a drawer
+ */
 public class MainLayout extends AppLayout {
+    // Creating the header and the drawer.
     public MainLayout () {
         createHeader();
         createDrawer();
     }
 
+    /**
+     * It creates a drawer with a logo and a toggle button.
+     */
     private void createDrawer() {
-        H1 logo= new H1("Cositis");
+        H1 logo= new H1("Cositos");
         logo.addClassNames("text-l", "m-m");
 
         HorizontalLayout header= new HorizontalLayout(new DrawerToggle(), logo);
@@ -31,6 +38,9 @@ public class MainLayout extends AppLayout {
         addToNavbar(header);
     }
 
+    /**
+     * This function creates a header for the application
+     */
     private void createHeader() {
         RouterLink packagesview = new RouterLink("Packages", CETrackerView.class);
         packagesview.setHighlightCondition(HighlightConditions.sameLocation());

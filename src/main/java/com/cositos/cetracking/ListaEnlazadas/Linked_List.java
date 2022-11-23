@@ -5,15 +5,16 @@ public class Linked_List {
     private Node last;
     private int size;
 
+    // The constructor of the class Linked_List.
     public Linked_List(){
         this.head= null;
         this.last= null;
         this.size= 0;
     }
 
-    
-    /** 
-     * @return boolean
+    /**
+     * 
+     * @return The method isEmpty() returns a boolean value.
      */
     public boolean isEmpty(){
         return this.head==null;
