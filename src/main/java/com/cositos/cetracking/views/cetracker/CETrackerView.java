@@ -3,6 +3,7 @@ package com.cositos.cetracking.views.cetracker;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
+import com.cositos.cetracking.Arduino.Arduino;
 import com.cositos.cetracking.ListaEnlazadas.Linked_List;
 import com.cositos.cetracking.datos.graph.graphgenerator;
 import com.cositos.cetracking.datos.info.Packages;
@@ -290,7 +291,6 @@ public class CETrackerView extends VerticalLayout {
                 packages.setstatus("The package is on the way, time left: " + timeofwaiting);
                 form.sendpackages(form, packages);
                 packagestate(packages, form, timeofwaiting-1);
-                
             }
         } else {
             Notification.show("Selecione una ruta primero para hacer el envio");
@@ -313,6 +313,9 @@ public class CETrackerView extends VerticalLayout {
                 if (remaning<=0){
                     pack.setstatus("Delivered");
                     forms.sendpackages(forms, pack);
+
+                    new Arduino(pack.gethexcode());
+
                     this.updateList();
                 } else{
                     pack.setstatus("The package is on the way, time left: " + remaning);
