@@ -1,4 +1,0 @@
-Si ya no va a utilzar mas lo que hay en esta carpeta borrelo, 
-si quiere modificar la pagina va a la carpeta de view y en cetracker, y vease 
-del min 5 hasta el min 11 o si quiere aun mas, para saber como se modifica la pagina.
-https://www.youtube.com/watch?v=bxy2JgqqKDU
