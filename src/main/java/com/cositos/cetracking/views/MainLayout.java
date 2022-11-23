@@ -11,7 +11,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.HighlightConditions;
 import com.vaadin.flow.router.RouterLink;
 
-public class MainLayout extends AppLayout{
+public class MainLayout extends AppLayout {
     public MainLayout () {
         createHeader();
         createDrawer();
