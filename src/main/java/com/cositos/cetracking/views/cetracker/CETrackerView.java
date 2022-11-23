@@ -87,7 +87,6 @@ public class CETrackerView extends VerticalLayout {
     private void updateList() {
         PackagesGrid.setItems(service.findAllPackages(filterText.getValue()));
     }
-
     private Component getContent() {
         HorizontalLayout content = new HorizontalLayout(PackagesGrid, form);
         content.setFlexGrow(2, PackagesGrid);
@@ -97,7 +96,6 @@ public class CETrackerView extends VerticalLayout {
 
         return content;
     }
-
     private void configureForm() {
         form = new PackageForm();
         form.setWidth("25em");
@@ -107,18 +105,15 @@ public class CETrackerView extends VerticalLayout {
         form.addListener(PackageForm.DeleteEvent.class, this::deletePackage);
         form.addListener(PackageForm.CloseEvent.class, e-> closeEditor());
     }
-
     private void savePackage(PackageForm.SaveEvent event) {
         service.savesdsdPackage(event.getPackage());
         updateList();
     }
-
     private void deletePackage(PackageForm.DeleteEvent event) {
         service.deletePackage(event.getPackage());
         updateList();
         closeEditor();
     }
-
     private void configureEvent(PackageForm.ConfigureEvent event) {
         packages= event.getPackage();
         ArrayList<Object> rutes= new ArrayList<>();
@@ -134,7 +129,6 @@ public class CETrackerView extends VerticalLayout {
         }
 
     }
-
     private Component getToolbar() {
         filterText.setPlaceholder("Filter by Codigo");
         filterText.setClearButtonVisible(true);
@@ -148,12 +142,10 @@ public class CETrackerView extends VerticalLayout {
         toolbar.addClassName("toolbar");
         return toolbar;
     }
-
     private void addPackage() {
         PackagesGrid.asSingleSelect().clear();
         editPackage(new Packages());
     }
-
     private void configureGrid() {
         PackagesGrid.addClassName("datos-grid");
         PackagesGrid.setSizeFull();
@@ -162,7 +154,6 @@ public class CETrackerView extends VerticalLayout {
 
         PackagesGrid.asSingleSelect().addValueChangeListener(e -> editPackage(e.getValue()));
     }
-
     private  void configureRute(ArrayList<Object> posiblerutes, Packages pack) {
         packages= pack;
         Rutes.clear();
@@ -170,7 +161,6 @@ public class CETrackerView extends VerticalLayout {
         Rutes.setVisible(true);
         closeEditor();
     }
-    
     @SuppressWarnings("unchecked")
     private void sendpack() {
         ArrayList<Object> r= (ArrayList<Object>) Rutes.getValue();
@@ -217,13 +207,11 @@ public class CETrackerView extends VerticalLayout {
                 packages.setstatus("The package is on the way, time left: " + timeofwaiting);
                 form.sendpackages(form, packages);
                 packagestate(packages, form, timeofwaiting-1);
-                
             }
         } else {
             Notification.show("Selecione una ruta primero para hacer el envio");
         }
     }
-
     private void packagestate(Packages pack, PackageForm forms ,int timeofwating){
         int remaning= timeofwating;
         var ui= UI.getCurrent();
