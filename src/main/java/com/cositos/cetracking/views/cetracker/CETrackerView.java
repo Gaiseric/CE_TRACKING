@@ -31,6 +31,7 @@ public class CETrackerView extends VerticalLayout {
     private SendThread send;
     static ListBox<Object> Rutes = new ListBox<>();
     static Packages packages;
+    int temp;
     int timeofwaiting;
     TextField filterText= new TextField();
     PackageForm form;
@@ -60,6 +61,8 @@ public class CETrackerView extends VerticalLayout {
         configureForm();
         Rutes.setWidthFull();
         Rutes.setHeightFull();
+        Rutes.clear();
+        Rutes.setVisible(false);
         add(
             hl,
             getToolbar(),
@@ -67,7 +70,8 @@ public class CETrackerView extends VerticalLayout {
             Rutes,
             Sendpack
         );
-
+        temp=3600;
+        updateing();
         updateList();
         closeEditor();
     }
@@ -115,15 +119,18 @@ public class CETrackerView extends VerticalLayout {
     }
 
     private void configureEvent(PackageForm.ConfigureEvent event) {
-        System.out.println("Se llamo esto");
         packages= event.getPackage();
         ArrayList<Object> rutes= new ArrayList<>();
         String src= packages.getstartingpoint();
         String dtn= packages.getdeliverypoint();
         System.out.println("Incio: " + src + ", Fin: " + dtn);
         rutes= graphgenerator.getrutes(src, dtn);
-
-        configureRute(rutes, packages);
+        System.out.println(rutes);
+        if(rutes.size()==0){
+            Notification.show("No existe conexion entre los destinos selecionados");
+        }else {
+            configureRute(rutes, packages);
+        }
 
     }
 
@@ -221,14 +228,34 @@ public class CETrackerView extends VerticalLayout {
         var ui= UI.getCurrent();
         send.SendAsync().addCallback(e -> {
             ui.access(() -> {
-                if (remaning==0){
+                if (remaning<=0){
                     pack.setstatus("Delivered");
                     forms.sendpackages(forms, pack);
+                    this.updateList();
                 } else{
                     pack.setstatus("The package is on the way, time left: " + remaning);
                     forms.sendpackages(forms, pack);
+                    this.updateList();
                     packagestate(pack, forms, (remaning-1));
+                    
                 }
+            });
+        }, err -> {
+            ui.access(() -> Notification.show("Error"));
+        });
+    }
+
+    private void updateing(){
+        var ui= UI.getCurrent();
+        updateList();
+        send.SendAsync().addCallback(e -> {
+            ui.access(() -> {
+                updateList();
+                if(temp>=0) {
+                    temp--;
+                    updateing();
+                }
+                
             });
         }, err -> {
             ui.access(() -> Notification.show("Error"));

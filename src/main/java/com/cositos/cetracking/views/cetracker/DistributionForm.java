@@ -3,8 +3,7 @@ package com.cositos.cetracking.views.cetracker;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.notification.Notification;
 
-import java.util.ArrayList;
-
+import com.cositos.cetracking.datos.graph.graphgenerator;
 import com.cositos.cetracking.datos.info.Distributions;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEvent;
@@ -12,9 +11,9 @@ import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.IntegerField;
+import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.ValidationException;
@@ -22,9 +21,8 @@ import com.vaadin.flow.shared.Registration;
 
 public class DistributionForm extends FormLayout {
     private Distributions distributions;
-    static ArrayList<String> DistributionsList= new ArrayList<>();
-    static ComboBox<String> distribution = new ComboBox<>("Distributions");
-    static ComboBox<String> connectedto = new ComboBox<>("Connected To");
+    static TextField distribution = new TextField("Distributions");
+    static TextField connectedto = new TextField("Connected To");
     IntegerField cost = new IntegerField("Cost");
     Binder<Distributions> binder = new BeanValidationBinder<>(Distributions.class); 
     
@@ -37,8 +35,6 @@ public class DistributionForm extends FormLayout {
     public DistributionForm() {
         addClassName("Package-form");
       binder.bindInstanceFields(this);
-      distribution.setItems(DistributionsList);
-      connectedto.setItems(DistributionsList);
       add(
         distribution,
         connectedto,
@@ -58,27 +54,36 @@ public class DistributionForm extends FormLayout {
         cancel.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
 
         save.addClickListener(event -> validateAndSave());
-        delete.addClickListener(event -> fireEvent(new DeleteEvent(this, distributions)));
+        delete.addClickListener(event -> eliminate());
         cancel.addClickListener(event -> fireEvent(new CloseEvent(this)));
 
         save.addClickShortcut(Key.ENTER);
         cancel.addClickShortcut(Key.ESCAPE);
         return new HorizontalLayout(save, delete, cancel);
-    }
+    } 
     
     private void validateAndSave() {
         try{
             binder.writeBean(distributions);
+            String dis= distributions.getdistribution(); 
+            String con= distributions.getconnectedto();
+            graphgenerator.Modify(dis, con, distributions.getcost());
+            PackageForm.insert(dis);
+            PackageForm.insert(con);
             fireEvent(new SaveEvent(this, distributions));
         } catch (ValidationException e) {
             Notification.show("Please fill all spaces");
         }
     }
 
-    public static void setList(ArrayList<String> List) {
-        DistributionsList= List;
+    private void eliminate() {
+      String dis= distributions.getdistribution(); 
+      String con= distributions.getconnectedto();
+      graphgenerator.EliminateEdge(dis, con);
+      PackageForm.eliminateformlist(dis);
+      PackageForm.eliminateformlist(con);
+      fireEvent(new DeleteEvent(this, distributions));
     }
-
     // Events
     public static abstract class DistributionsFormEvent extends ComponentEvent<DistributionForm> {
         private Distributions distributions;

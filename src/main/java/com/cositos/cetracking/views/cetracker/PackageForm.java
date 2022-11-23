@@ -2,6 +2,7 @@ package com.cositos.cetracking.views.cetracker;
 
 import java.util.ArrayList;
 
+import com.cositos.cetracking.ListaEnlazadas.Linked_List;
 import com.cositos.cetracking.datos.info.Packages;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEvent;
@@ -19,9 +20,10 @@ import com.vaadin.flow.shared.Registration;
 public class PackageForm extends FormLayout {
     private Packages packages;
     static ArrayList<String> DistributionsList = new ArrayList<>();
+    static Linked_List Linked= new Linked_List();
 
-    ComboBox<String> startingpoint = new ComboBox<>("Starting Point");
-    ComboBox<String> deliverypoint = new ComboBox<>("Delivery Point");
+    static ComboBox<String> startingpoint = new ComboBox<>("Starting Point");
+    static ComboBox<String> deliverypoint = new ComboBox<>("Delivery Point");
     Binder<Packages> binder = new BeanValidationBinder<>(Packages.class); 
     
     Button save= new Button("Save");
@@ -72,9 +74,35 @@ public class PackageForm extends FormLayout {
     public void sendpackages(PackageForm sou ,Packages pack) {
       fireEvent(new SaveEvent(sou, pack));
     }
+
     public static void setList(ArrayList<String> List) {
       DistributionsList= List;
-  }
+    }
+
+    public static void setLinked(Linked_List linked){
+      linked.displayList();
+      Linked= linked;
+    }
+
+    public static void eliminateformlist(String data){
+      if(Linked.eliminate(data)){
+        DistributionsList.remove(data);
+        startingpoint.clear();
+        deliverypoint.clear();
+        startingpoint.setItems(DistributionsList);
+        deliverypoint.setItems(DistributionsList);
+      }
+    }
+
+    public static void insert(String data){
+      if(Linked.InsertLastUnique(data)){
+        DistributionsList.add(data);
+        startingpoint.clear();
+        deliverypoint.clear();
+        startingpoint.setItems(DistributionsList);
+        deliverypoint.setItems(DistributionsList);
+      }
+    }
 
     // Events
     public static abstract class PackageFormEvent extends ComponentEvent<PackageForm> {

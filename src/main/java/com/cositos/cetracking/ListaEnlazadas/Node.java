@@ -5,11 +5,13 @@ public class Node {
     private Object data;
     private Node next;
     private Node previous;
+    private int times;
 
     public Node(Object data){
         this.next = null;
         this.previous = null; 
         this.data = data;
+        this.times=1;
     } 
 
     
@@ -26,6 +28,18 @@ public class Node {
      */
     public void setData(Object data){
         this.data= data;
+    }
+
+    public void add(){
+        this.times++;
+    }
+
+    public void eliminate(){
+        this.times--;
+    }
+
+    public int gettime(){
+        return this.times;
     }
 
     

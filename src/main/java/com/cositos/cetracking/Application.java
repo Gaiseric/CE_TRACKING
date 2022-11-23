@@ -1,8 +1,5 @@
 package com.cositos.cetracking;
 
-import com.cositos.cetracking.datos.graph.graphgenerator;
-import com.cositos.cetracking.views.cetracker.DistributionForm;
-import com.cositos.cetracking.views.cetracker.PackageForm;
 import com.vaadin.flow.component.dependency.NpmPackage;
 import com.vaadin.flow.component.page.AppShellConfigurator;
 import com.vaadin.flow.component.page.Push;
@@ -28,15 +25,8 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EnableAsync
 @Push
 public class Application implements AppShellConfigurator {
-    static graphgenerator Generador= new graphgenerator();
-
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
-        graphgenerator.Inicio();
-        DistributionForm.setList(graphgenerator.getList());
-        PackageForm.setList(graphgenerator.getList());
     }
-
-   
 
 }

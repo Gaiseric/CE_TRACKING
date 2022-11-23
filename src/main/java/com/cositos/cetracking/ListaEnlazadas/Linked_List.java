@@ -62,6 +62,7 @@ public class Linked_List {
         Node current= this.head;
         while(current!=null){
             if(current.getData().equals(data)){
+                current.add();
                 return false;
             } else {
                 current = current.getNext();
@@ -69,6 +70,40 @@ public class Linked_List {
         }
         insertLast(data);
         return true;
+    }
+
+    public boolean eliminate(Object data){
+        Node current= this.head;
+        Node previous= current;
+        while(current!=null){
+            if(current.getData().equals(data)){
+                if(current.gettime()<=1){
+                    previous.setNext(current.getNext());
+                    return true;
+                } else{
+                    current.eliminate();
+                    return false;
+                }
+            } else{
+                previous= current;
+                current= current.getNext();
+            }
+        }
+
+        return false;
+    }
+
+    public void eliminateall(Object data){
+        Node current= this.head;
+        Node previous= current;
+        while(current!=null){
+            if(current.getData().equals(data)){
+                previous.setNext(current.getNext());
+            } else{
+                previous= current;
+                current= current.getNext();
+            }
+        }
     }
 
     
