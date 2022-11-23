@@ -38,6 +38,10 @@ public class Node {
         this.times--;
     }
 
+    
+    /** 
+     * @return int
+     */
     public int gettime(){
         return this.times;
     }

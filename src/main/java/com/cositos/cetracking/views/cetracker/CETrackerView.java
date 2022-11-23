@@ -174,9 +174,7 @@ public class CETrackerView extends VerticalLayout {
         ArrayList<Object> rutes= new ArrayList<>();
         String src= packages.getstartingpoint();
         String dtn= packages.getdeliverypoint();
-        System.out.println("Incio: " + src + ", Fin: " + dtn);
         rutes= graphgenerator.getrutes(src, dtn);
-        System.out.println(rutes);
         if(rutes.size()==0){
             Notification.show("No existe conexion entre los destinos selecionados");
         }else {
@@ -307,7 +305,7 @@ public class CETrackerView extends VerticalLayout {
      */
     private void packagestate(Packages pack, PackageForm forms ,int timeofwating){
         int remaning= timeofwating;
-        var ui= UI.getCurrent();
+        UI ui= UI.getCurrent();
         send.SendAsync().addCallback(e -> {
             ui.access(() -> {
                 if (remaning<=0){
@@ -334,7 +332,7 @@ public class CETrackerView extends VerticalLayout {
      * It updates the list, sends a request to the server, and then updates the list again
      */
     private void updateing(){
-        var ui= UI.getCurrent();
+        UI ui= UI.getCurrent();
         updateList();
         send.SendAsync().addCallback(e -> {
             ui.access(() -> {

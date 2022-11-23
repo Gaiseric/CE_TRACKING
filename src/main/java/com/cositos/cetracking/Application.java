@@ -25,6 +25,10 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EnableAsync
 @Push
 public class Application implements AppShellConfigurator {
+    
+    /** 
+     * @param args
+     */
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }

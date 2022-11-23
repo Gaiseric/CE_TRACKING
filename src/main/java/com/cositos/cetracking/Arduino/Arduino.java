@@ -13,8 +13,12 @@ public class Arduino {
         Arduino(code);
     }
 
+    
+    /** 
+     * @param Message
+     */
     private static void Arduino(String Message){
-        var sp = SerialPort.getCommPort("COM5");
+        SerialPort sp = SerialPort.getCommPort("COM5");
 
         PrintWriter output = new PrintWriter(sp.getOutputStream());
 

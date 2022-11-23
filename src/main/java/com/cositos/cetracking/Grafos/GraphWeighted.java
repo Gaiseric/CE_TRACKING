@@ -227,7 +227,6 @@ public class GraphWeighted<T> {
 			newrute.add(localPathList + "con un costo en colones de: " + (pathCost+300) + " con una duracion en segundos de: ");
 			newrute.add(pathCost);
 			rutes.add(newrute);
-            System.out.println(localPathList+ " con un costo de: " + pathCost + "\n");
             // if match found then no need to traverse more till depth
             return;
         }

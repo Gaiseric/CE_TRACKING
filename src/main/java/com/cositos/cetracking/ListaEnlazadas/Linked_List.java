@@ -42,6 +42,10 @@ public class Linked_List {
         }
     }
 
+    
+    /** 
+     * @param data
+     */
     public void insertLast(Object data){
         Node newNode= new Node(data);
 
@@ -73,6 +77,11 @@ public class Linked_List {
         return true;
     }
 
+    
+    /** 
+     * @param data
+     * @return boolean
+     */
     public boolean eliminate(Object data){
         Node current= this.head;
         Node previous= current;
@@ -94,6 +103,10 @@ public class Linked_List {
         return false;
     }
 
+    
+    /** 
+     * @param data
+     */
     public void eliminateall(Object data){
         Node current= this.head;
         Node previous= current;
@@ -132,12 +145,21 @@ public class Linked_List {
         System.out.println(lista);
     }
 
+    
+    /** 
+     * @return Object
+     */
     public Object GetHead() {
         
         return this.head.getData();
     }
 
 
+    
+    /** 
+     * @param searchValue
+     * @return Object
+     */
     public Object GetNext (Object searchValue) {
         Node current = this.head;
 

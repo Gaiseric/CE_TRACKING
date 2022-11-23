@@ -167,7 +167,6 @@ public class graphgenerator {
         grafo.printAllPaths(src, dst);
         ArrayList<Object> rutes = grafo.getrutes();
         if(rutes.size()>1){
-            System.out.println(rutes);
             startQuickStart(0, rutes.size()-1, rutes);
             return rutes;
         } else{
@@ -224,7 +223,6 @@ public class graphgenerator {
                 temp = ((ArrayList<Object>) inputArray.get(init));
                 inputArray.set(init, inputArray.get(length));
                 inputArray.set(length,temp);
-                System.out.println(inputArray);
                 length--;
                 init++;
             }else{

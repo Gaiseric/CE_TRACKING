@@ -3,6 +3,10 @@ package com.cositos.cetracking.Grafos;
 import java.util.Random;
 
 public class Prueba {
+    
+    /** 
+     * @param args
+     */
     public  static void main(String[] args) {
     GraphWeighted<String> grafo = new GraphWeighted<>();
     grafo.addEdge("San Jose", "Alajuela", 1000);
@@ -19,11 +23,23 @@ public class Prueba {
     }
 
 
+    
+    /** 
+     * @param max
+     * @param min
+     * @return int
+     */
     public static int bug(int max, int min) {
         Random r= new Random();
         return r.nextInt((max-min)+1) + min ;
     }
 
+    
+    /** 
+     * @param max
+     * @param min
+     * @return int
+     */
     private static int randomint(int max, int min){
         if (max<=min){
             throw new IllegalArgumentException("El maximo tiene que ser un numero mayor al minomo");
