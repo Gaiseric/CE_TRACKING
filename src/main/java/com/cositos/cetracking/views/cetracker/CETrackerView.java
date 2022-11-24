@@ -307,9 +307,9 @@ public class CETrackerView extends VerticalLayout {
      */
     private void packagestate(Packages pack, PackageForm forms ,int timeofwating){
         int remaning= timeofwating;
-        if(remaning<=-1){
+        if(remaning<=-2){
             SendArduino(pack);
-        } 
+        } else{
             UI ui= UI.getCurrent();
             send.SendAsync().addCallback(e -> {
                 ui.access(() -> {
@@ -334,6 +334,8 @@ public class CETrackerView extends VerticalLayout {
             }, err -> {
                 ui.access(() -> Notification.show("Error"));
             });
+        }
+            
         }
         
     
