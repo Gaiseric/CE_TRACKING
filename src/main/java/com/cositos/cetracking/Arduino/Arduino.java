@@ -5,8 +5,6 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.io.PrintWriter;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 /**
  * Clase encargada del la logica del arduino
@@ -16,6 +14,7 @@ import java.util.ResourceBundle;
 public class Arduino  {
     static private SerialPort porta;
 
+    // A method that is called by the controller.
     @Async
     public void Led(String hex) throws InterruptedException {
         porta = SerialPort.getCommPort("COM5");

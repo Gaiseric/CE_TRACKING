@@ -12,6 +12,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
@@ -85,7 +86,7 @@ public class PackageForm extends FormLayout {
         binder.writeBean(packages);
         fireEvent(new ConfigureEvent(this, packages));
       } catch (ValidationException e){
-        e.printStackTrace();
+        Notification.show("Please fill all spaces");
       }
       
     }
