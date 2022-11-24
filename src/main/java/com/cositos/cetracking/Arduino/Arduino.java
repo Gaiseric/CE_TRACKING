@@ -34,7 +34,11 @@ public class Arduino  {
             output.print(hex);
             output.flush();
             porta.closePort();
-            Thread.sleep(10000);
+            int i=10;
+            while(i>0){
+                Thread.sleep(1000);
+                i--;
+            }
             porta.openPort();
             porta.closePort();
         } catch (InterruptedException e) {

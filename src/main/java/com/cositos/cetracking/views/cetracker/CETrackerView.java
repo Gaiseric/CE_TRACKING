@@ -97,6 +97,7 @@ public class CETrackerView extends VerticalLayout {
      * the service class and passing it the value of the filterText field.
      */
     private void updateList() {
+        System.out.println("Se actualiazo");
         PackagesGrid.setItems(service.findAllPackages(filterText.getValue()));
     }
 
@@ -305,36 +306,42 @@ public class CETrackerView extends VerticalLayout {
      */
     private void packagestate(Packages pack, PackageForm forms ,int timeofwating){
         int remaning= timeofwating;
-        UI ui= UI.getCurrent();
-        send.SendAsync().addCallback(e -> {
-            ui.access(() -> {
-                if (remaning<=0){
-                    pack.setstatus("Delivered");
-                    forms.sendpackages(forms, pack);         
-                    this.updateList();
-                    SendArduino(pack);
-                } else{
-                    pack.setstatus("The package is on the way, time left: " + remaning);
-                    forms.sendpackages(forms, pack);
-                    this.updateList();
-                    packagestate(pack, forms, (remaning-1));
-                    
-                }
+        if(remaning<=-1){
+            SendArduino(pack);
+        } else{
+            UI ui= UI.getCurrent();
+            send.SendAsync().addCallback(e -> {
+                ui.access(() -> {
+                    if (remaning<=0){
+                        pack.setstatus("Delivered");
+                        forms.sendpackages(forms, pack);         
+                        this.updateList();
+                        
+                        packagestate(pack, forms, (remaning-1));
+                    } else{
+                        pack.setstatus("The package is on the way, time left: " + remaning);
+                        forms.sendpackages(forms, pack);
+                        this.updateList();
+                        packagestate(pack, forms, (remaning-1));
+                        
+                    }
+                });
+            }, err -> {
+                ui.access(() -> Notification.show("Error"));
+            });
+        }
+        
+    }
+    
+    private void SendArduino(Packages pack){
+        UI ui= UI.getCurrent();;
+        send.Led(pack.gethexcode()).addCallback(e -> {
+            ui.access(()->{
+                            
             });
         }, err -> {
             ui.access(() -> Notification.show("Error"));
         });
-    }
-    private void SendArduino(Packages pack){
-        UI ui= UI.getCurrent();
-        Arduino a= new Arduino();
-                    a.Led(pack.gethexcode()).addCallback(e -> {
-                        ui.access(()->{
-                            
-                        });
-                    }, err -> {
-                        ui.access(() -> Notification.show("Error"));
-                    });
     }
 
     /**
