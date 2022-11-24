@@ -44,9 +44,10 @@ public class CETrackerView extends VerticalLayout {
     PackageService service;
 
     // Creating a new view for the application.
-    public CETrackerView(PackageService service, SendThread send) {
+    public CETrackerView(PackageService service, SendThread send, Arduino adr) {
         this.service = service;
         this.send= send;
+        this.ardu= adr;
         add(new H1("We are cositos"));
 
         Button Enviarbtn = new Button("Send");
