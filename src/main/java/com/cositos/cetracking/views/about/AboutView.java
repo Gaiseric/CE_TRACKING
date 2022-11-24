@@ -7,8 +7,9 @@ import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+
+@Route(value = "about", layout = MainLayout.class)
 @PageTitle("About")
-@Route(value = "", layout = MainLayout.class)
 public class AboutView extends VerticalLayout {
 
     public AboutView() {
