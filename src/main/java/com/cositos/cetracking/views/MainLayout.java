@@ -1,5 +1,6 @@
 package com.cositos.cetracking.views;
 
+import com.cositos.cetracking.views.about.AboutView;
 import com.cositos.cetracking.views.cetracker.CETrackerView;
 import com.cositos.cetracking.views.cetracker.GraphView;
 import com.vaadin.flow.component.applayout.AppLayout;
@@ -47,7 +48,8 @@ public class MainLayout extends AppLayout {
 
         addToDrawer(new VerticalLayout(
             packagesview,
-            new RouterLink("Graph", GraphView.class)
+            new RouterLink("Graph", GraphView.class),
+            new RouterLink("About", AboutView.class)
         ));
 
     }

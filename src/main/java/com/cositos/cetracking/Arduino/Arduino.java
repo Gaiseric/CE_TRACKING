@@ -9,13 +9,16 @@ import java.io.PrintWriter;
  */
 public class Arduino {
 
+    private SerialPort sp;
+
     public Arduino(String code) {
         Arduino(code);
     }
 
-    
-    /** 
-     * @param Message
+    /**
+     * It takes a string, and sends it to the Arduino
+     * 
+     * @param Message The message to be sent to the Arduino
      */
     private static void Arduino(String Message){
         SerialPort sp = SerialPort.getCommPort("COM5");

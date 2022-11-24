@@ -1,14 +1,14 @@
 package com.cositos.cetracking.views.about;
 
+import com.cositos.cetracking.views.MainLayout;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-
 @PageTitle("About")
-@Route(value = "about")
+@Route(value = "", layout = MainLayout.class)
 public class AboutView extends VerticalLayout {
 
     public AboutView() {

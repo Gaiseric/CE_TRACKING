@@ -210,14 +210,19 @@ public class graphgenerator {
         int pivot = (int) ((ArrayList<Object>) inputArray.get(pivotIndex)).get(1);
 
         while(true){
+            // Checking if the second element in the object is greater than the pivot, and if it is,
+            // then it decreases the length by one.
             while((int) ((ArrayList<Object>) inputArray.get(length)).get(1)>pivot && length>start){
                 length--;
             }
 
+            // Checking if the second element in the object is less than the pivot, and if it is, then
+            // it increases the length by one.
             while((int) ((ArrayList<Object>) inputArray.get(init)).get(1)<pivot && init<end){
                 init++;
             }
 
+            // Swapping the elements in the array.
             if(init<length){
                 ArrayList<Object> temp;
                 temp = ((ArrayList<Object>) inputArray.get(init));
