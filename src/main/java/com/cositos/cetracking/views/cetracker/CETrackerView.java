@@ -34,6 +34,7 @@ public class CETrackerView extends VerticalLayout {
     Linked_List Hexcodes= new Linked_List();
     private TextField name;
     private SendThread send;
+    private Arduino ardu;
     static ListBox<Object> Rutes = new ListBox<>();
     static Packages packages;
     int temp;
@@ -307,7 +308,7 @@ public class CETrackerView extends VerticalLayout {
         int remaning= timeofwating;
         if(remaning<=-1){
             SendArduino(pack);
-        } else{
+        } 
             UI ui= UI.getCurrent();
             send.SendAsync().addCallback(e -> {
                 ui.access(() -> {
@@ -315,8 +316,12 @@ public class CETrackerView extends VerticalLayout {
                         pack.setstatus("Delivered");
                         forms.sendpackages(forms, pack);         
                         this.updateList();
+                        if(remaning==-1){
+                            packagestate(pack, forms, (remaning-1));
+                        } else{
+                            packagestate(pack, forms, (remaning-1));
+                        }
                         
-                        packagestate(pack, forms, (remaning-1));
                     } else{
                         pack.setstatus("The package is on the way, time left: " + remaning);
                         forms.sendpackages(forms, pack);
@@ -330,11 +335,11 @@ public class CETrackerView extends VerticalLayout {
             });
         }
         
-    }
+    
     
     private void SendArduino(Packages pack){
         UI ui= UI.getCurrent();;
-        send.Led(pack.gethexcode()).addCallback(e -> {
+        ardu.Led(pack.gethexcode()).addCallback(e -> {
             ui.access(()->{
                             
             });
