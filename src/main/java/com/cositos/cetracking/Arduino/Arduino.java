@@ -1,35 +1,31 @@
 package com.cositos.cetracking.Arduino;
 
 import com.fazecast.jSerialComm.SerialPort;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
 
 import java.io.PrintWriter;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  * Clase encargada del la logica del arduino
  */
-public class Arduino {
 
-    private SerialPort sp;
+@Service
+public class Arduino  {
+    static private SerialPort porta;
 
-    public Arduino(String code) {
-        Arduino(code);
-    }
-
-    /**
-     * It takes a string, and sends it to the Arduino
-     * 
-     * @param Message The message to be sent to the Arduino
-     */
-    private static void Arduino(String Message){
-        SerialPort sp = SerialPort.getCommPort("COM5");
-
-        PrintWriter output = new PrintWriter(sp.getOutputStream());
-
-        System.out.println(Message);
-        System.out.println("1234");
-        output.print("1234");
+    @Async
+    public void Led(String hex) throws InterruptedException {
+        porta = SerialPort.getCommPort("COM5");
+        porta.openPort();
+        Thread.sleep(1600);
+        PrintWriter output = new PrintWriter(porta.getOutputStream());
+        System.out.println(hex);
+        output.print(hex);
         output.flush();
-        sp.closePort();
-    }
+        porta.closePort();
+        }
 
-}
+    }
