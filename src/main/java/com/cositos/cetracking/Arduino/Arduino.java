@@ -17,13 +17,16 @@ public class Arduino  {
     // A method that is called by the controller.
     @Async
     public void Led(String hex) throws InterruptedException {
-        porta = SerialPort.getCommPort("COM5");
+        porta = SerialPort.getCommPort("COM4");
         porta.openPort();
         Thread.sleep(1600);
         PrintWriter output = new PrintWriter(porta.getOutputStream());
         System.out.println(hex);
         output.print(hex);
         output.flush();
+        porta.closePort();
+        Thread.sleep(10000);
+        porta.openPort();
         porta.closePort();
         }
 
