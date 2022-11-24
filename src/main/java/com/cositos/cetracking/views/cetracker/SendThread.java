@@ -39,6 +39,7 @@ import java.io.PrintWriter;
 @Service
 public class SendThread {
 
+    private SerialPort porta;
     /**
      * It returns a ListenableFuture that will be completed with a Void value after a 1 second delay
      * 
@@ -66,7 +67,6 @@ public class SendThread {
     @Async
     public ListenableFuture<Void> Led(String hex) {
         try {
-            SerialPort porta;
             porta = SerialPort.getCommPort("COM4");
             porta.openPort();
             Thread.sleep(1600);

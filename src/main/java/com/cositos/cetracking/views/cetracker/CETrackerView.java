@@ -97,7 +97,6 @@ public class CETrackerView extends VerticalLayout {
      * the service class and passing it the value of the filterText field.
      */
     private void updateList() {
-        System.out.println("Se actualiazo");
         PackagesGrid.setItems(service.findAllPackages(filterText.getValue()));
     }
 
