@@ -310,17 +310,9 @@ public class CETrackerView extends VerticalLayout {
             ui.access(() -> {
                 if (remaning<=0){
                     pack.setstatus("Delivered");
-                    forms.sendpackages(forms, pack);
-
-                    Arduino a= new Arduino();
-                    try {
-                        a.Led(pack.gethexcode());
-                    } catch (InterruptedException ex) {
-                        throw new RuntimeException(ex);
-                    }
-
-
+                    forms.sendpackages(forms, pack);         
                     this.updateList();
+                    SendArduino(pack);
                 } else{
                     pack.setstatus("The package is on the way, time left: " + remaning);
                     forms.sendpackages(forms, pack);
@@ -332,6 +324,17 @@ public class CETrackerView extends VerticalLayout {
         }, err -> {
             ui.access(() -> Notification.show("Error"));
         });
+    }
+    private void SendArduino(Packages pack){
+        UI ui= UI.getCurrent();
+        Arduino a= new Arduino();
+                    a.Led(pack.gethexcode()).addCallback(e -> {
+                        ui.access(()->{
+                            
+                        });
+                    }, err -> {
+                        ui.access(() -> Notification.show("Error"));
+                    });
     }
 
     /**

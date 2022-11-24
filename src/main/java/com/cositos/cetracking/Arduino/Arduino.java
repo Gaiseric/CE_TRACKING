@@ -24,7 +24,7 @@ public class Arduino  {
      * @return A ListenableFuture.
      */
     @Async
-    public ListenableFuture<Void> Led(String hex) throws InterruptedException {
+    public ListenableFuture<Void> Led(String hex) {
         try {
             porta = SerialPort.getCommPort("COM4");
             porta.openPort();
